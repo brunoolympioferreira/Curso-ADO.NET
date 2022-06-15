@@ -2,6 +2,7 @@
 using eCommerce.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace eCommerce.API.Controllers
 {
@@ -37,15 +38,30 @@ namespace eCommerce.API.Controllers
         [HttpPost]
         public IActionResult Insert([FromBody]Usuario usuario)
         {
-            _repository.Insert(usuario);
-            return Ok(usuario);
+            try
+            {
+                _repository.Insert(usuario);
+                return Ok(usuario);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         [HttpPut]
         public IActionResult Update([FromBody]Usuario usuario)
         {
-            _repository.Update(usuario);
-            return Ok(usuario);
+            try
+            {
+                _repository.Update(usuario);
+                return Ok(usuario);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
         }
 
         [HttpDelete("{id}")]
